@@ -12,6 +12,13 @@ const posts = require('./routes/api/posts');
 
 app.use('/api/posts', posts);
 
+if (process.env.NODE_ENV === 'production') {
+    // Static folder (in our case server/public)
+    app.use(express.static(__dirname + '/public/'))
+    // handle SPA
+    app.get(/.*/, (req, res) => res.sendFile(__dirname + '/public/index.html'))
+}
+
 // any route that goes thru api/posts will be directed thru const posts and then the router will go on from there
 const port = process.env.PORT || 5000;
 
