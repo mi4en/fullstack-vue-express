@@ -3,28 +3,27 @@
     <h1>Latest Posts</h1>
     <div class="create-post">
       <label for="create-post">Create new post:</label>
-      <input type="text" id="create-post" v-model="text" placeholder="Create a post">
-      <button v-on:click="createPost">
-        Post
-      </button>
+      <input type="text" id="create-post" v-model="text" placeholder="Create a post" />
+      <button v-on:click="createPost">Post</button>
     </div>
     <div class="delete-post">
       <label for="delete-post">Delete post:</label>
-      <input type="text" id="delete-post" placeholder="Double click the post" readonly>
+      <input type="text" id="delete-post" placeholder="Double click the post" readonly />
     </div>
-    <hr>
+    <hr />
     <p class="error" v-if="error">{{ error }}</p>
     <div class="posts-container">
-      <div class="post"
+      <div
+        class="post"
         v-for="(post, index) in posts"
         v-bind:item="post"
         v-bind:index="index"
         v-bind:key="post._id"
         v-on:dblclick="deletePost(post._id)"
       >
-        <div class="created-at">
-          {{ `${post.createdAt.getDate()}/${post.createdAt.getMonth()}/${post.createdAt.getFullYear()}` }}
-        </div>
+        <div
+          class="created-at"
+        >{{ `${post.createdAt.getDate()}/${post.createdAt.getMonth()}/${post.createdAt.getFullYear()}` }}</div>
         <p class="text">{{ post.text }}</p>
       </div>
     </div>
@@ -32,20 +31,20 @@
 </template>
 
 <script>
-import PostService from '../PostService'
+import PostService from "../PostService";
 export default {
-  name: 'PostComponent',
+  name: "PostComponent",
   data() {
     return {
       posts: [],
-      error: '',
-      text: ''
-    }
-  }, 
+      error: "",
+      text: ""
+    };
+  },
   async created() {
     try {
       this.posts = await PostService.getPosts();
-    } catch(err) {
+    } catch (err) {
       this.error = err.message;
     }
   },
@@ -59,7 +58,7 @@ export default {
       this.posts = await PostService.getPosts();
     }
   }
-}
+};
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
@@ -104,5 +103,4 @@ p.text {
   font-weight: 700;
   margin-bottom: 0;
 }
-
 </style>
